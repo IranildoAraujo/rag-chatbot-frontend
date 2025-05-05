@@ -1,0 +1,52 @@
+/* src/components/ChatMessage/ChatMessage.module.css */
+.messageContainer {
+    display: flex;
+    margin-bottom: 10px;
+    max-width: 80%; /* Limita largura das mensagens */
+  }
+  
+  .userContainer {
+    justify-content: flex-end; /* Alinha mensagem do usuário à direita */
+    margin-left: auto; /* Empurra para a direita */
+  }
+  
+  .botContainer {
+    justify-content: flex-start; /* Alinha mensagem do bot à esquerda */
+    margin-right: auto; /* Empurra para a esquerda */
+  }
+  
+  .systemContainer {
+   justify-content: center; /* Centraliza mensagens do sistema */
+   max-width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+  }
+  
+  .message {
+    padding: 10px 15px;
+    border-radius: 15px;
+    word-wrap: break-word; /* Quebra palavras longas */
+    line-height: 1.4;
+  }
+  
+  .user {
+    background-color: #007bff; /* Azul para usuário */
+    color: white;
+    border-bottom-right-radius: 5px; /* Ajuste visual */
+  }
+  
+  .bot {
+    background-color: #e9e9eb; /* Cinza claro para bot */
+    color: #333;
+    border-bottom-left-radius: 5px; /* Ajuste visual */
+  }
+  
+  .system {
+    background-color: #f8d7da; /* Vermelho claro para erros/status */
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.9em;
+    width: 100%; /* Ocupa mais espaço horizontal */
+  }

@@ -1,0 +1,24 @@
+/* src/index.css (Estilos Globais) */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f7f6; /* Fundo geral suave */
+  color: #333;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Alinha no topo para chat */
+  min-height: 100vh;
+  padding-top: 20px; /* Espaço no topo */
+}
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
