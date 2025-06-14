@@ -27,9 +27,9 @@ export interface RagQueryResponse {
 
 export interface UploadResponse {
   message: string;
-  chunks_added?: number; // Opcional, dependendo da resposta da API
-  filename?: string;     // Opcional
-  collection?: string;   // Opcional
+  chunks_added?: number;
+  filename?: string;
+  collection?: string;
 }
 
 export interface ApiErrorResponse {
@@ -46,8 +46,8 @@ export const queryRAG = async (payload: QueryPayload): Promise<RagQueryResponse>
   } catch (error) {
     console.error("Erro ao fazer query RAG:", error);
     if (axios.isAxiosError(error) && error.response?.data) {
-        // Tenta retornar a mensagem de erro específica da API
-        throw new Error((error.response.data as ApiErrorResponse).error || 'Erro desconhecido na API de query.');
+      // Tenta retornar a mensagem de erro específica da API
+      throw new Error((error.response.data as ApiErrorResponse).error || 'Erro desconhecido na API de query.');
     }
     throw new Error('Não foi possível conectar ao serviço de query.');
   }
@@ -63,17 +63,15 @@ export const uploadFile = async (file: File, onUploadProgress?: (progressEvent: 
   try {
     const response = await apiClient.post<UploadResponse>('/upload/', formData, {
       headers: {
-        // Importante: Deixe o Axios definir o Content-Type para multipart/form-data
         'Content-Type': 'multipart/form-data',
       },
-      onUploadProgress: onUploadProgress, // Callback para progresso
+      onUploadProgress: onUploadProgress,
     });
     return response.data;
   } catch (error) {
-     console.error("Erro ao fazer upload do arquivo:", error);
+    console.error("Erro ao fazer upload do arquivo:", error);
     if (axios.isAxiosError(error) && error.response?.data) {
-        // Tenta retornar a mensagem de erro específica da API
-        throw new Error((error.response.data as ApiErrorResponse).error || 'Erro desconhecido na API de upload.');
+      throw new Error((error.response.data as ApiErrorResponse).error || 'Erro desconhecido na API de upload.');
     }
     throw new Error('Não foi possível conectar ao serviço de upload.');
   }

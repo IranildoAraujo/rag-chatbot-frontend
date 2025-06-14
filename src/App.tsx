@@ -43,12 +43,8 @@ function App() {
 
     try {
       const response = await queryRAG({ query: query });
-      addMessage('bot', response.answer);
-       // Opcional: mostrar contexto recuperado
-       if (response.retrieved_context && response.retrieved_context.length > 0) {
-            // console.log("Contexto recuperado:", response.retrieved_context);
-            // addMessage('system', `Contexto usado: ${response.retrieved_context.join(' | ')}`);
-       }
+      const botAnswer = response.answer ? response.answer.trim() : '';
+      addMessage('bot', botAnswer);
     } catch (error: any) {
       addMessage('system', `Erro ao buscar resposta: ${error.message || 'Erro desconhecido'}`);
     } finally {
@@ -56,30 +52,28 @@ function App() {
     }
   };
 
-   // Lida com o upload de arquivos (recebe uma lista)
+  // Lida com o upload de arquivos (recebe uma lista)
   const handleFileUpload = async (acceptedFiles: File[]) => {
     if (isUploading || isLoading) return; // Não faz upload se já estiver ocupado
 
     // Processa um arquivo por vez (poderia ser em paralelo com Promise.all)
     for (const file of acceptedFiles) {
-        setIsUploading(true);
-        setUploadProgress(0);
-        addMessage('system', `Iniciando upload de: ${file.name}`);
+      setIsUploading(true);
+      setUploadProgress(0);
+      addMessage('system', `Iniciando upload de: ${file.name}`);
 
-        try {
-            const response = await uploadFile(file, (progressEvent) => {
-                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                setUploadProgress(percentCompleted);
-            });
-            addMessage('system', `${response.message || `Arquivo ${file.name} processado.`} (Chunks: ${response.chunks_added ?? 'N/A'})`);
-        } catch (error: any) {
-            addMessage('system', `Erro no upload de ${file.name}: ${error.message || 'Erro desconhecido'}`);
-        } finally {
-            setIsUploading(false); // Permite próximo upload da lista ou normal
-            setUploadProgress(null);
-        }
-         // Pequena pausa entre uploads múltiplos se desejar
-         // await new Promise(resolve => setTimeout(resolve, 500));
+      try {
+        const response = await uploadFile(file, (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        });
+        addMessage('system', `${response.message || `Arquivo ${file.name} processado.`} (Chunks: ${response.chunks_added ?? 'N/A'})`);
+      } catch (error: any) {
+        addMessage('system', `Erro no upload de ${file.name}: ${error.message || 'Erro desconhecido'}`);
+      } finally {
+        setIsUploading(false); // Permite próximo upload da lista ou normal
+        setUploadProgress(null);
+      }
     }
   };
 
@@ -100,10 +94,10 @@ function App() {
 
         {/* Componente de Upload */}
         <FileUpload
-            onFileUpload={handleFileUpload}
-            isUploading={isUploading}
-            uploadProgress={uploadProgress}
-         />
+          onFileUpload={handleFileUpload}
+          isUploading={isUploading}
+          uploadProgress={uploadProgress}
+        />
 
         {/* Formulário de Input */}
         <form onSubmit={handleSendMessage} className={styles.inputForm}>
@@ -116,9 +110,9 @@ function App() {
             disabled={isLoading || isUploading} // Desabilita durante carregamento/upload
           />
           <button
-             type="submit"
-             className={styles.sendButton}
-             disabled={isLoading || isUploading || !inputValue.trim()} // Desabilita se ocupado ou input vazio
+            type="submit"
+            className={styles.sendButton}
+            disabled={isLoading || isUploading || !inputValue.trim()} // Desabilita se ocupado ou input vazio
           >
             Enviar
           </button>

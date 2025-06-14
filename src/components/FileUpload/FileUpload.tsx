@@ -4,9 +4,9 @@ import { useDropzone, FileRejection } from 'react-dropzone';
 import styles from './FileUpload.module.css';
 
 interface FileUploadProps {
-  onFileUpload: (acceptedFiles: File[]) => void; // Aceita múltiplos arquivos
+  onFileUpload: (acceptedFiles: File[]) => void;
   isUploading: boolean;
-  uploadProgress: number | null; // Progresso de 0 a 100
+  uploadProgress: number | null;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, isUploading, uploadProgress }) => {
@@ -14,7 +14,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, isUploading, uplo
   const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
     if (fileRejections.length > 0) {
       console.warn('Arquivos rejeitados:', fileRejections);
-      // Você pode adicionar uma notificação ao usuário aqui sobre os arquivos rejeitados
       alert(`Alguns arquivos foram rejeitados. Verifique o console para detalhes.`);
     }
     if (acceptedFiles.length > 0 && !isUploading) {
@@ -24,17 +23,14 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, isUploading, uplo
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
-    noClick: true, // Desabilita abertura da janela ao clicar na dropzone (usaremos o botão)
+    noClick: true,
     noKeyboard: true,
-    disabled: isUploading, // Desabilita dropzone durante upload
-    // Aceita os tipos de arquivo que o backend suporta
+    disabled: isUploading,
     accept: {
-        'text/plain': ['.txt'],
-        'application/pdf': ['.pdf'],
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-        // Adicione outros tipos se o backend suportar (ex: ODT)
-        // 'application/vnd.oasis.opendocument.text': ['.odt'],
+      'text/plain': ['.txt'],
+      'application/pdf': ['.pdf'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
     }
   });
 
@@ -60,7 +56,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, isUploading, uplo
           </button>
         </>
       )}
-       {isDragActive && <div className={styles.overlay}>Solte aqui!</div>}
+      {isDragActive && <div className={styles.overlay}>Solte aqui!</div>}
     </div>
   );
 };
