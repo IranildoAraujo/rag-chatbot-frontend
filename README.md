@@ -23,6 +23,12 @@ Essas instruções permitirão que você obtenha uma cópia do projeto em opera�
 npm install
 ```
 
+## No arquivo `.env` da Frontend adicione o hostname da API:
+
+```
+VITE_API_BASE_URL=#############################
+```
+
 ### Estrutura de Pastas (Sugestão)
 
 Dentro da pasta src, podemos organizar assim:
