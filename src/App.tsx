@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react';
+import { useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react';
 import ChatMessage, { Message } from './components/ChatMessage/ChatMessage';
 import FileUpload from './components/FileUpload/FileUpload';
 import { queryRAG, uploadFile } from './services/api';
