@@ -3,6 +3,9 @@
 # =================================================================
 FROM node:18.19.1-alpine AS build
 
+# Define um argumento de build para a URL da API
+ARG VITE_API_BASE_URL
+
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
 
@@ -12,8 +15,12 @@ COPY package.json package-lock.json* ./
 # Instala as dependências do projeto
 RUN npm install
 
-# Copia o restante do código-fonte do projeto
+# Copia o restante do código-source do projeto
 COPY . .
+
+# Define a variável de ambiente VITE_API_BASE_URL no ambiente do CONTAINER DE BUILD
+# Isso garante que o 'npm run build' veja a variável VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 # Executa o script de build para gerar os arquivos estáticos
 RUN npm run build
